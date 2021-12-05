@@ -1,47 +1,116 @@
-import React, {
-    useState,
-    render,
-    useEffect
-} from "react";
-import {
-    useHistory
-} from "react-router";
-import Card from "./spaceCard";
-
-
+import React, {useState, useEffect} from "react";
+import SpaceCard from "./spaceCard";
+import RoomCard from "./roomCard";
 
 function Spaces(){
-    let [spc, setSpc] = useState([]);
+    
+    let [spc, setSpc] = useState({idActual:false,data:[]});
+
     useEffect(() => {
+        console.log("useEffect")
         fetch("https://gist.githubusercontent.com/josejbocanegra/0067d2b28b009140fee423cfc84e40e6/raw/6e6b11160fbcacb56621b6422684d615dc3a0d33/spaces.json")
         .then(response => response.json())
         .then(jdata =>{
-            let m = []
-            for (let i = 0; i < jdata.length; i++) {
-                console.log(jdata[i])
-                if (jdata[i]["isActive"]) {
-                    let urlA = "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                    if (jdata[i]["type"] === "loft" ){
-                        urlA = "https://media.admagazine.com/photos/618a615bc649ce85eef7538d/master/w_1600%2Cc_limit/85658.jpg"
-                    }
-                    let n = <div class="col-sm">
-                             <Card state={{name:jdata[i]["name"],text:jdata[i]["address"],url:urlA}} id={jdata[i]["id"]}/>
-                            </div>
-                    m.push(n)
-                }
-            }
-            setSpc(m)
+            setSpc({...spc,data:jdata});
         })
+        if (spc.idActual){
+            fetch("https://gist.githubusercontent.com/josejbocanegra/92c90d5f2171739bd4a76d639f1271ea/raw/9effd124c825f7c2a7087d4a50fa4a91c5d34558/rooms.json")
+            .then(response => response.json())
+            .then(data => {
+                setSpc({...spc,dataRoom:data});
+            })
+        }
      },[]);
 
-     console.log(spc)
-    return <div>
+    let handler = (id) =>{
+        setSpc({...spc,idActual:id,listDevices:[]})
+    }
+
+    let handler2 = (devices) =>{
+        setSpc({...spc,listDevices:devices})
+    }
+
+    let espacios = () =>{  
+        return spc.data.map((item,i)=>(
+            <div className="col-xs-4">
+              <SpaceCard state={item} key={i+1} parentSet={handler}/>
+            </div>
+        ));              
+    }
+
+    let data1 = (id) =>{
+        return spc.dataRoom.filter(room => room.homeId == id).map((item,i)=>(
+            <div className="col-xs-4">
+              <RoomCard state={item} key={i+1} parentSet={handler2}/>
+            </div>
+        ));
+    }
+
+    let data2 = () =>{
+        if (spc.listDevices){
+            return spc.listDevices.map((item,i)=>(
+                <tr>
+                    <th scope="row">{i+1}</th>
+                    <td>{item.id}</td>
+                    <td>{item.name}</td>
+                    <td>{item.desired.value}</td>
+                </tr>
+            ));
+        }
+        else{
+            return null;
+        }
+    }
+
+    let rooms = () =>{  
+        if (spc.dataRoom){
+            return <div>
+                <br/>
+                <h2>My rooms</h2>
+                <br/>
+                 <div className="container">
+                 <div className="row">
+                <div className="col-xs-7">
+                <div className="container">
+                <div className="row">
+                    {data1(spc.idActual)}
+                </div>
+                </div>
+                </div>
+                <div className="col-xs-5">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Device</th>
+                        <th scope="col">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {data2()}
+                    </tbody>
+                </table>
+                </div>
+                </div>
+                </div>
+                </div>;  
+        }
+        else{
+            return null;
+        }          
+    }
+    
+    return <div style={{marginLeft:"15pt",marginTop:"20pt",marginRight:"25pt"}}>
     <h1>My spaces</h1> 
-    <div class="container">
-     {spc}
-    <div class="row">
+    <br/>
+    <div className="container">
+    <div className="row">
+    {espacios()}
     </div>
     </div>
+    <hr class="my-4"/>
+    {rooms()}
     </div>;
 }
 
