@@ -95,10 +95,8 @@ function Spaces(){
                 </table>
                 </div>
                 </div>
-                <div className="row" style={{textAlign:"center" ,display:"flex", justifyContent:"center", alignItems:"center"}}>
                 <br/>
                 <Chart data={spc.dataRoom.filter(room => room.homeId == spc.idActual)}/>
-                </div>
                 </div>
                 </div>;  
         }
@@ -106,7 +104,7 @@ function Spaces(){
             return null;
         }          
     }
-    console.log(spc)
+    //console.log(spc)
 
     return <div style={{marginLeft:"15pt",marginTop:"20pt",marginRight:"25pt"}}>
     <h1><FormattedMessage id="My spaces"/></h1> 
