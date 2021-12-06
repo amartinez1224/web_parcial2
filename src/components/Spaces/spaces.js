@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import SpaceCard from "./spaceCard";
 import RoomCard from "./roomCard";
+import {FormattedMessage} from 'react-intl';
 
 function Spaces(){
     
@@ -66,7 +67,7 @@ function Spaces(){
         if (spc.dataRoom){
             return <div>
                 <br/>
-                <h2>My rooms</h2>
+                <h2><FormattedMessage id="My rooms"/></h2>
                 <br/>
                  <div className="container">
                  <div className="row">
@@ -83,8 +84,8 @@ function Spaces(){
                         <tr>
                         <th scope="col">#</th>
                         <th scope="col">ID</th>
-                        <th scope="col">Device</th>
-                        <th scope="col">Value</th>
+                        <th scope="col"><FormattedMessage id="Device"/></th>
+                        <th scope="col"><FormattedMessage id="Value"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -100,9 +101,13 @@ function Spaces(){
             return null;
         }          
     }
+
+    let userLang = navigator.language || navigator.userLanguage; 
+    console.log("The language is: " + userLang);
     
+
     return <div style={{marginLeft:"15pt",marginTop:"20pt",marginRight:"25pt"}}>
-    <h1>My spaces</h1> 
+    <h1><FormattedMessage id="My spaces"/></h1> 
     <br/>
     <div className="container">
     <div className="row">

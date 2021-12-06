@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Spaces from "./components/Spaces/spaces";
+import {IntlProvider} from 'react-intl';
 import reportWebVitals from './reportWebVitals';
 
+import localeEsMessages from "./locales/es";
+import localeEnMessages from "./locales/en";
+
+let userLang = (navigator.language || navigator.userLanguage).split("-")[0]; 
+console.log("The language is: " + userLang);
+let messages = localeEnMessages
+if (userLang == "es"){
+  messages = localeEsMessages;
+}
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <IntlProvider  messages={messages}>
+  <Spaces/>
+  </IntlProvider>,
   document.getElementById('root')
 );
 
