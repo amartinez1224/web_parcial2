@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import SpaceCard from "./spaceCard";
 import RoomCard from "./roomCard";
+import Chart from "./chart";
 import {FormattedMessage} from 'react-intl';
 
 function Spaces(){
@@ -94,6 +95,10 @@ function Spaces(){
                 </table>
                 </div>
                 </div>
+                <div className="row" style={{textAlign:"center" ,display:"flex", justifyContent:"center", alignItems:"center"}}>
+                <br/>
+                <Chart data={spc.dataRoom.filter(room => room.homeId == spc.idActual)}/>
+                </div>
                 </div>
                 </div>;  
         }
@@ -101,10 +106,7 @@ function Spaces(){
             return null;
         }          
     }
-
-    let userLang = navigator.language || navigator.userLanguage; 
-    console.log("The language is: " + userLang);
-    
+    console.log(spc)
 
     return <div style={{marginLeft:"15pt",marginTop:"20pt",marginRight:"25pt"}}>
     <h1><FormattedMessage id="My spaces"/></h1> 
