@@ -12,7 +12,7 @@ function SpaceCard(props){
           urlA = "https://media.admagazine.com/photos/618a615bc649ce85eef7538d/master/w_1600%2Cc_limit/85658.jpg"
       }
     return <button className="card border-dark mb-3" style={{overflow:"hidden",height:"18rem",width:"20rem"}} onClick={handler}>
-    <img className="card-img-top" src={urlA} alt="Card image cap" style={{maxWidth:"100%",maxHeight:"50%"}} />
+    <img className="card-img-top" src={urlA} alt={"Image of the space "+props.state.name} style={{maxWidth:"100%",maxHeight:"50%"}} />
     <div className="card-body" style={{textAlign:"left",marginLeft:"5%"}}>
       <br/>
       <h5 className="card-title">{props.state.name}</h5>

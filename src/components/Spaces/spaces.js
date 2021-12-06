@@ -7,27 +7,23 @@ import {FormattedMessage} from 'react-intl';
 function Spaces(){
     
     let [spc, setSpc] = useState({idActual:false,data:[]});
-    let [room, setRoom] = useState({a:1});
     
     useEffect(() => {
         console.log("useEffect")
         fetch("https://gist.githubusercontent.com/josejbocanegra/0067d2b28b009140fee423cfc84e40e6/raw/6e6b11160fbcacb56621b6422684d615dc3a0d33/spaces.json")
         .then(response => response.json())
         .then(jdata =>{
-            setSpc({...spc,data:jdata});
-        })
-        if (spc.idActual){
             fetch("https://gist.githubusercontent.com/josejbocanegra/92c90d5f2171739bd4a76d639f1271ea/raw/9effd124c825f7c2a7087d4a50fa4a91c5d34558/rooms.json")
             .then(response => response.json())
             .then(data => {
-                setSpc({...spc,dataRoom:data});
+                setSpc({...spc,data:jdata,dataRoom:data});
             })
-        }
-     },[room]);
+        })
+
+     },[]);
 
     let handler = (id) =>{
-        setSpc({...spc,idActual:id,listDevices:[]})
-        setRoom({a:1})   
+        setSpc({...spc,idActual:id,listDevices:[]})  
     }
 
     let handler2 = (devices) =>{
@@ -35,31 +31,31 @@ function Spaces(){
     }
 
     let espacios = () =>{  
-        return spc.data.map((item,i)=>(
+        return spc.data.map((item,i)=>{return (
             <div className="col-xs-4">
               <SpaceCard state={item} key={i+1} parentSet={handler}/>
             </div>
-        ));              
+        )});              
     }
 
     let data1 = (id) =>{
-        return spc.dataRoom.filter(room => room.homeId == id).map((item,i)=>(
+        return spc.dataRoom.filter(room => room.homeId == id).map((item,i)=>{return (
             <div className="col-xs-4">
               <RoomCard state={item} key={i+1} parentSet={handler2}/>
             </div>
-        ));
+        )});
     }
 
     let data2 = () =>{
         if (spc.listDevices){
-            return spc.listDevices.map((item,i)=>(
+            return spc.listDevices.map((item,i)=>{return (
                 <tr>
                     <th scope="row">{i+1}</th>
                     <td>{item.id}</td>
                     <td>{item.name}</td>
                     <td>{item.desired.value}</td>
                 </tr>
-            ));
+            )});
         }
         else{
             return null;
@@ -67,7 +63,7 @@ function Spaces(){
     }
 
     let rooms = () =>{  
-        if (spc.dataRoom){
+        if (spc.idActual){
             return <div>
                 <br/>
                 <h2><FormattedMessage id="My rooms"/></h2>
@@ -82,7 +78,7 @@ function Spaces(){
                 </div>
                 </div>
                 <div className="col-xs-5">
-                <table class="table table-striped">
+                <table className="table table-striped">
                     <thead>
                         <tr>
                         <th scope="col">#</th>
@@ -116,7 +112,7 @@ function Spaces(){
     {espacios()}
     </div>
     </div>
-    <hr class="my-4"/>
+    <hr className="my-4"/>
     {rooms()}
     </div>;
 }

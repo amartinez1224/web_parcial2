@@ -21,6 +21,7 @@ function Chart(props) {
     let data = {}
     props.data.map((item,i)=>{
         data[item.name] = item.powerUsage.value;
+        return null;
     })
 
     const color = d3.scaleOrdinal()
@@ -49,11 +50,6 @@ function Chart(props) {
     .style("opacity", 0.7)
     .on("mouseover", (d,i)=>{tooltip.text(i.data[0]+": "+i.data[1]+" KwH");return tooltip.style("visibility", "visible")})
     .on("mouseout", (d,i)=>{return tooltip.style("visibility", "hidden")})
-
-    //svg.selectAll('whatever')
-   // .on("mouseover", function(d){return tooltip.style("visibility", "visible").text(d.data);})
-    //.on("mouseout", function(d){return tooltip.style("visibility", "hidden");})
-
 
   });
 

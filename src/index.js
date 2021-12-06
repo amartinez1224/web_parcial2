@@ -9,14 +9,13 @@ import localeEsMessages from "./locales/es";
 import localeEnMessages from "./locales/en";
 
 let userLang = (navigator.language || navigator.userLanguage).split("-")[0]; 
-console.log("The language is: " + userLang);
 let messages = localeEnMessages
 if (userLang == "es"){
   messages = localeEsMessages;
 }
 
 ReactDOM.render(
-  <IntlProvider  messages={messages}>
+  <IntlProvider locale="en" messages={messages}>
   <Spaces/>
   </IntlProvider>,
   document.getElementById('root')

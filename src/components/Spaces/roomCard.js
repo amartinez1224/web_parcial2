@@ -16,7 +16,7 @@ function RoomCard(props){
   return <button className="card border-dark mb-3" style={{overflow:"hidden",height:"10rem",width:"10rem"}} onClick={handler}>
     <h5 className="card-title" style={{textAlign:"left",marginLeft:"5%"}}>{props.state.name}</h5>
   <div className="card-body" >
-    <img className="card-img-top" src={urlA} alt="Card image cap" style={{maxWidth:"100%",maxHeight:"50%"}} />
+    <img className="card-img-top" src={urlA} alt={"Image of the room "+props.state.name} style={{maxWidth:"100%",maxHeight:"50%"}} />
   </div>
   </button>;
 
