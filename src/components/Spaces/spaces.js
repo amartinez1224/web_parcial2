@@ -10,15 +10,27 @@ function Spaces(){
     
     useEffect(() => {
         console.log("useEffect")
-        fetch("https://gist.githubusercontent.com/josejbocanegra/0067d2b28b009140fee423cfc84e40e6/raw/6e6b11160fbcacb56621b6422684d615dc3a0d33/spaces.json")
-        .then(response => response.json())
-        .then(jdata =>{
-            fetch("https://gist.githubusercontent.com/josejbocanegra/92c90d5f2171739bd4a76d639f1271ea/raw/9effd124c825f7c2a7087d4a50fa4a91c5d34558/rooms.json")
+        if(navigator.onLine){
+            fetch("https://gist.githubusercontent.com/josejbocanegra/0067d2b28b009140fee423cfc84e40e6/raw/6e6b11160fbcacb56621b6422684d615dc3a0d33/spaces.json")
             .then(response => response.json())
-            .then(data => {
-                setSpc({...spc,data:jdata,dataRoom:data});
+            .then(jdata =>{
+                fetch("https://gist.githubusercontent.com/josejbocanegra/92c90d5f2171739bd4a76d639f1271ea/raw/9effd124c825f7c2a7087d4a50fa4a91c5d34558/rooms.json")
+                .then(response => response.json())
+                .then(data => {
+                    setSpc({...spc,data:jdata,dataRoom:data});
+                    localStorage.setItem("data", JSON.stringify({...spc,data:jdata,dataRoom:data}));
+                })
             })
-        })
+        }
+        else{
+            if(localStorage.getItem("data") === null) {
+                setSpc({})
+            } else {
+                setSpc(JSON.parse(localStorage.getItem("data")));
+                console.log(JSON.parse(localStorage.getItem("data")))
+            }
+        }
+        
 
      },[]);
 
