@@ -7,7 +7,8 @@ import {FormattedMessage} from 'react-intl';
 function Spaces(){
     
     let [spc, setSpc] = useState({idActual:false,data:[]});
-
+    let [room, setRoom] = useState({a:1});
+    
     useEffect(() => {
         console.log("useEffect")
         fetch("https://gist.githubusercontent.com/josejbocanegra/0067d2b28b009140fee423cfc84e40e6/raw/6e6b11160fbcacb56621b6422684d615dc3a0d33/spaces.json")
@@ -22,10 +23,11 @@ function Spaces(){
                 setSpc({...spc,dataRoom:data});
             })
         }
-     },[]);
+     },[room]);
 
     let handler = (id) =>{
         setSpc({...spc,idActual:id,listDevices:[]})
+        setRoom({a:1})   
     }
 
     let handler2 = (devices) =>{
